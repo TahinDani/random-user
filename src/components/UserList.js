@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Radio } from 'antd';
+import { Radio, Table } from 'antd'
+import 'antd/dist/antd.css'
 
 const UserList = () => {
 	const [users, setUsers] = useState([])
@@ -26,8 +27,10 @@ const UserList = () => {
 			const filteredByZip = resultJson.results.filter(user => hasTwoPrimes(user.location.postcode))
 			setUsers(filteredByZip)
 		}
-		fetchData();
-	}, []);
+		if (users.length === 0) {
+			fetchData();
+		}
+	}, [users]);
 
 	const isPrime = (num) => {
 		for(let i = 2, s = Math.sqrt(num); i <= s; i++)
@@ -44,7 +47,13 @@ const UserList = () => {
 		{ label: 'females', value: 'females' },
 		{ label: 'males', value: 'males' },
 		{ label: 'all', value: 'all' },
-	];
+	]
+
+	const columns = [
+		{ title: 'Name', dataIndex: 'name', key: 'name', render: (text, record, index) => `${record.name.first} ${record.name.last}`},
+		{ title: 'Gender', dataIndex: 'gender', key: 'gender'},
+		{ title: 'Zip', dataIndex: 'zip', key: 'zip', render: (text, record, index) => record.location.postcode },
+	]
 
 	return (
 		<div className="Userlist">
@@ -55,8 +64,16 @@ const UserList = () => {
 					value={gender}
 					optionType="button"
 				/>
-				{/* Users goes here */}
-			</div>
+				</div>
+				<Table
+					tableLayout='auto'
+					pagination={{showSizeChanger: false}}
+					columns={columns}
+					expandedRowRender={record => <p>{record.email}</p>}
+					dataSource={users}
+					rowKey={ record => record.email}
+				/>,
+			
 		</div>
 	);
 };
