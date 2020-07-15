@@ -1,0 +1,29 @@
+.Userlist {
+	margin-top: 1em;
+}
+
+.Userlist-checkboxes {
+	margin-bottom: 2em;
+}
+
+.Userlist-table-expanded {
+	display: flex;
+	align-items: center;
+	margin: 0;
+}
+
+.Userlist-table-expanded p {
+	margin: 0 2em;
+}
+
+.Userlist-table-row img {
+	border-radius: 50%;
+	margin-right: 2em;
+	display: none;
+}
+
+@media (min-width: 410px) {
+	.Userlist-table-row img {
+		display: unset;
+	}
+}

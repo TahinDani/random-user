@@ -1,9 +1,12 @@
 import React from 'react';
+import '../styles/Header.css'
 
 const Header = () => {
 	return (
-		<div>
-			random-user
+		<div className="Header">
+			<div className="Header-logo content-container">
+				random-user
+			</div>
 		</div>
 	);
 };

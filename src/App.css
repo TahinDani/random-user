@@ -8,3 +8,8 @@ body, html {
 .App {
   font-family:  'Oswald', sans-serif;
 }
+
+.content-container {
+	width: min(1000px, 90%);
+	margin: 0 auto;
+}

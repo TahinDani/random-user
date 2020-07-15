@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Radio, Table } from 'antd'
 import 'antd/dist/antd.css'
+import '../styles/UserList.css'
 
 const UserList = () => {
 	const [users, setUsers] = useState([])
@@ -50,7 +51,7 @@ const UserList = () => {
 	]
 
 	const tableColumns = [
-		{ title: 'Name', dataIndex: 'name', key: 'name', render: (text, record, index) => `${record.name.first} ${record.name.last}`},
+		{ title: 'Name', dataIndex: 'name', key: 'name', render: (text, record, index) => <div className="Userlist-table-row"><img src={record.picture.thumbnail} alt=""/>{record.name.first} {record.name.last}</div>},
 		{ title: 'Gender', dataIndex: 'gender', key: 'gender'},
 		{ title: 'Zip', dataIndex: 'zip', key: 'zip', render: (text, record, index) => record.location.postcode },
 	]
@@ -63,25 +64,32 @@ const UserList = () => {
 		}
 	}
 
+	const expandedRow = (record) => (
+		<div className="Userlist-table-expanded">
+			<p>{record.email}</p>
+		</div>
+	)
+
 	return (
 		<div className="Userlist">
-			<div className="Userlist-checkboxes">
-			<Radio.Group
-					options={genderOptions}
-					onChange={handleGenderChange}
-					value={gender}
-					optionType="button"
-				/>
+			<div className="content-container">
+				<div className="Userlist-checkboxes">
+					<Radio.Group
+						options={genderOptions}
+						onChange={handleGenderChange}
+						value={gender}
+						optionType="button"
+					/>
 				</div>
 				<Table
 					tableLayout='auto'
-					pagination={{showSizeChanger: false}}
+					pagination={{showSizeChanger: false, responsive: true}}
 					columns={tableColumns}
-					expandedRowRender={record => <p>{record.email}</p>}
+					expandedRowRender={(record) => expandedRow(record)}
 					dataSource={getUsers()}
-					rowKey={ record => record.email}
-				/>,
-			
+					rowKey={ (record) => record.email}
+				/>
+			</div>
 		</div>
 	);
 };
