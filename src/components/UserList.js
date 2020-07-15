@@ -44,16 +44,24 @@ const UserList = () => {
 	}
 
 	const genderOptions = [
-		{ label: 'females', value: 'females' },
-		{ label: 'males', value: 'males' },
+		{ label: 'females', value: 'female' },
+		{ label: 'males', value: 'male' },
 		{ label: 'all', value: 'all' },
 	]
 
-	const columns = [
+	const tableColumns = [
 		{ title: 'Name', dataIndex: 'name', key: 'name', render: (text, record, index) => `${record.name.first} ${record.name.last}`},
 		{ title: 'Gender', dataIndex: 'gender', key: 'gender'},
 		{ title: 'Zip', dataIndex: 'zip', key: 'zip', render: (text, record, index) => record.location.postcode },
 	]
+
+	const getUsers = () => {
+		if (gender !== 'all') {
+			return users.filter(user => user.gender === gender)
+		} else {
+			return users
+		}
+	}
 
 	return (
 		<div className="Userlist">
@@ -68,9 +76,9 @@ const UserList = () => {
 				<Table
 					tableLayout='auto'
 					pagination={{showSizeChanger: false}}
-					columns={columns}
+					columns={tableColumns}
 					expandedRowRender={record => <p>{record.email}</p>}
-					dataSource={users}
+					dataSource={getUsers()}
 					rowKey={ record => record.email}
 				/>,
 			
